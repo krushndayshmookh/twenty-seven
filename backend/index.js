@@ -9,10 +9,10 @@ const SESSION_SECRET = process.env.SESSION_SECRET
 
 let app = express()
 
-var http = require('http').createServer(app)
-var io = require('socket.io')(http)
+const http = require('http').createServer(app)
+const io = require('socket.io')(http)
 
-global.io = io
+const eventController = require('./controllers/eventController')(io)
 
 if (process.env.NODE_ENV == 'development') {
   const logger = require('morgan')
@@ -43,13 +43,6 @@ app.use(function(req, res) {
   res.status(404)
   if (req.accepts('json')) return res.send({ error: 'Not found' })
   return res.type('txt').send('Not found')
-})
-
-io.on('connection', client => {
-  console.log('Client connected.')
-  client.on('disconnect', () => {
-    console.log('Client disconnected.')
-  })
 })
 
 // Generate directories
