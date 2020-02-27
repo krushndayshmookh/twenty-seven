@@ -10,7 +10,7 @@
         q-btn(flat dense round icon="settings" aria-label="Menu" @click="rightDrawerOpen = !rightDrawerOpen")
 
 
-    q-drawer(v-model="leftDrawerOpen" show-if-above :mini="miniState" :width="300" :breakpoint="500" bordered)
+    q-drawer(v-model="leftDrawerOpen" :mini="miniState" :width="300" :breakpoint="0" bordered)
       q-scroll-area.fit
         q-list(padding)
           q-item(v-for="(conversation, index) in conversations" :key="conversation.id" clickable="" v-ripple="" @click="currentConversationIndex = index")
@@ -31,7 +31,7 @@
 
 
 
-    q-drawer(v-model="rightDrawerOpen" side="right" show-if-above="" :width="250" :breakpoint="500")
+    q-drawer(v-model="rightDrawerOpen" side="right" :width="250" :breakpoint="500")
       q-scroll-area.fit
         q-list.menu-list(padding="")
           q-item(clickable="" v-ripple="" @click="darkMode = !darkMode")
@@ -72,7 +72,7 @@ export default {
 
   data() {
     return {
-      leftDrawerOpen: false,
+      leftDrawerOpen: true,
       rightDrawerOpen: false,
       miniState: true,currentConversationIndex: 0,
       conversations: [
@@ -137,6 +137,9 @@ export default {
       }, Math.random() * 3000 + 1000)
     }
  
+  },
+  mounted(){
+    this.darkMode = true
   }
 }
 </script>
