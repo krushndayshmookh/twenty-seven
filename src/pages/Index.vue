@@ -7,6 +7,9 @@
         template(v-slot:append)
           q-icon(v-if="selfMessage !== ''" name="close" @click="selfMessage = ''" class="cursor-pointer")
 
+      .q-ma-xs
+        q-badge(:color="connectionStatus ? 'green' : 'orange'" :label="connectionStatus ? 'Online' : 'Offline'")
+
 </template>
 
 <script>
@@ -31,7 +34,7 @@ export default {
     this.debouncedSendMessage = _.debounce(this.sendMessage, 500)
   },
   mounted() {
-    this.socket = io.connect('http://localhost:3000')
+    this.socket = io.connect('https://twenty-seven.herokuapp.com/')
     this.attachSocketListeners()
   },
   methods: {
