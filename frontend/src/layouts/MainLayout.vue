@@ -1,49 +1,26 @@
-<template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
+<template lang="pug">
+  q-layout(view="lHh Lpr lFf")
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
+    q-header(elevated)
+      q-toolbar
+        q-btn(flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen")
 
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
+        q-toolbar-title Twenty 7
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
-      <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
+        div
+          q-toggle(left-label color="green" v-model="darkMode" label="Dark Mode")
 
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+        div Quasar v{{ $q.version }}
+
+    q-drawer(v-model="leftDrawerOpen" show-if-above bordered)
+      q-list
+        q-item-label.text-grey-8(header) Essential Links
+
+        EssentialLink(v-for="link in essentialLinks" :key="link.title" v-bind="link")
+
+    q-page-container
+      router-view
+
 </template>
 
 <script>
@@ -56,7 +33,7 @@ export default {
     EssentialLink
   },
 
-  data () {
+  data() {
     return {
       leftDrawerOpen: false,
       essentialLinks: [
@@ -97,6 +74,17 @@ export default {
           link: 'https://facebook.quasar.dev'
         }
       ]
+    }
+  },
+
+  computed: {
+    darkMode: {
+      get: function() {
+        return this.$q.dark.isActive
+      },
+      set: function(val) {
+        this.$q.dark.set(val)
+      }
     }
   }
 }
