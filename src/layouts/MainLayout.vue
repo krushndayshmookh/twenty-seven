@@ -8,7 +8,7 @@
         q-toolbar-title Twenty 7
 
         q-btn(flat dense round icon="settings" aria-label="Menu" @click="rightDrawerOpen = !rightDrawerOpen")
-        
+
 
     q-drawer(v-model="leftDrawerOpen" show-if-above :mini="miniState" :width="300" :breakpoint="500" bordered)
       q-scroll-area.fit
@@ -48,7 +48,7 @@
             q-item-section(avatar="")
               q-icon(name="star")
             q-item-section
-              | Hidden
+              q-btn(color="primary" label="Trigger" @click="trigger")
           q-item(clickable="" v-ripple="")
             q-item-section(avatar="")
               q-icon(name="send")
@@ -63,6 +63,8 @@
 
     q-page-container
       router-view
+    .q-pa-md
+      q-ajax-bar(ref="bar" position="bottom" color="accent" size="10px" skip-hijack="")
 
 </template>
 
@@ -91,7 +93,20 @@ export default {
     }
   },
   methods: {
-    
+    // we manually trigger it (this is not needed if we
+    // don't skip Ajax calls hijacking)
+    trigger () {
+      const bar = this.$refs.bar
+
+      bar.start()
+
+      this.timer = setTimeout(() => {
+        if (this.$refs.bar) {
+          this.$refs.bar.stop()
+        }
+      }, Math.random() * 3000 + 1000)
+    }
+ 
   }
 }
 </script>
